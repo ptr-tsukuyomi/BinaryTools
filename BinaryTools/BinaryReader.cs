@@ -149,6 +149,24 @@ namespace BinaryTools
             return encoding.GetString(buffer);
         }
 
+        public async Task<float> ReadSingleAsync()
+        {
+            var array = new byte[4];
+            if (await ReadAsync(array, 0, array.Length) != array.Length) throw new DataLengthNotEnoughException("Can not read enough data");
+
+            if (IsDataLittleEndian != IsMachineLittleEndian) Array.Reverse(array);
+            return BitConverter.ToSingle(array, 0);
+        }
+
+        public async Task<double> ReadDoubleAsync()
+        {
+            var array = new byte[8];
+            if (await ReadAsync(array, 0, array.Length) != array.Length) throw new DataLengthNotEnoughException("Can not read enough data");
+
+            if (IsDataLittleEndian != IsMachineLittleEndian) Array.Reverse(array);
+            return BitConverter.ToDouble(array, 0);
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // 重複する呼び出しを検出するには
 
