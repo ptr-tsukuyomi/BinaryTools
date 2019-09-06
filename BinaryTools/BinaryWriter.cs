@@ -88,6 +88,18 @@ namespace BinaryTools
             if (nullTerminated) await WriteByteAsync(0);
         }
 
+        public async Task WriteSingleAsync(float x)
+        {
+            var data = BitConverter.GetBytes(x);
+            await WriteMultiByteAsync(data, 0, data.Length);
+        }
+
+        public async Task WriteDoubleAsync(double x)
+        {
+            var data = BitConverter.GetBytes(x);
+            await WriteMultiByteAsync(data, 0, data.Length);
+        }
+
         #region IDisposable Support
         private bool disposedValue = false; // 重複する呼び出しを検出するには
 
